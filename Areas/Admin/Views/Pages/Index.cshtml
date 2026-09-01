@@ -1,0 +1,44 @@
+﻿
+@using Next_Store.Models
+@model List<Page>
+<table class="table sorting">
+    <tr class="home">
+    <th>Title</th>
+    <th>Content</th>
+    </tr>
+    <tbody>
+    @foreach (var page2 in Model)
+    {
+       <tr id="id_@page2.Id" class="@page2.Slug">
+           <td>@page2.Title</td>
+           <td>@Html.Raw(page2.Content)</td>
+           <td>
+               <a asp-action="Edit" asp-route-id=@page2.Id>Edit</a> |
+               <a asp-action="Details" asp-route-id=@page2.Id>Details</a> 
+              @if(page2.Slug!="home")
+                {
+                     <a class="confirmDeletion" asp-action="Delete" asp-route-id=@page2.Id>Delete</a> 
+                }
+            </td>
+          
+       </tr>
+    }
+    </tbody>
+</table>
+@section Scripts
+{
+    <script>
+      $("table#pages tbody").sortable({
+      items: "tr:not(.home)",
+      placeholder: "ui-state-highlight",
+      update: function (){
+            let ids =  $("table#pages tbody").sortable("serialize")
+            let url="~/Admin/Page/Reorder";
+
+            $post(url, ids, function (){});
+      }
+      })
+    </script>
+}
+
+

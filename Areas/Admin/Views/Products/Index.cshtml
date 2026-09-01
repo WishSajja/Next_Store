@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+string space =" ";
+}
+@using Next_Store.Models
+@model List<ProductsModel>
+<h1 class="display-4">Products</h1>
+<table class="table sorting">
+    <tr class="home">
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>image</th>
+        
+    </tr>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr id="id_@product.Id">
+                <td>@product.Name</td>
+                <td>@($"UGX{space}{product.Price:N0}")</td>
+                <td>@product.Category.Name</td>
+                <td>
+                    <img src="/Media/Products/@product.Image" width="200" alt="@product.Image" class="rounded-5" />
+                </td>
+               
+                <td>
+                    <a asp-action="Edit" asp-route-id=@product.Id>Edit</a> |
+                    <a asp-action="Details" asp-route-id=@product.Id>Details</a>
+                   
+                </td>
+          
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="d-flex w-100 justify-content-center">
+<pagination page-count="ViewBag.TotalPages"
+            page-number="ViewBag.PageNumber"
+            page-target="/Admin/Products/Index"
+            page-range="ViewBag.PageRange" ></pagination>
+
+</div>
+<a asp-action="Create">Add_Product</a>

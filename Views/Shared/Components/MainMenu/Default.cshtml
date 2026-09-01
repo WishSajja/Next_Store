@@ -1,0 +1,12 @@
+﻿
+@model List<Page>
+@foreach (var pages in Model)
+{
+	@if(pages.Slug!="home")
+	{
+	 <li class="nav-item">
+		 <a class="nav-link text-dark" asp-area="" asp-controller="Pages" asp-action="Page" asp-route-slug="@pages.Slug">@pages.Title</a>
+	 </li>
+	}
+    
+}

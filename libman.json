@@ -1,0 +1,14 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "ckeditor@4.25.1",
+      "destination": "wwwroot/lib/ckeditor/"
+    },
+    {
+      "library": "jqueryui@1.14.2",
+      "destination": "wwwroot/lib/jqueryui/"
+    }
+  ]
+}

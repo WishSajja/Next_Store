@@ -1,0 +1,48 @@
+﻿
+@using Next_Store.Models
+@model List<CategoryModel>
+<h1 class="display-4">Categories</h1>
+<table class="table sorting">
+    <tr class="home">
+        <th>Name</th>
+        <th>Slug</th>
+        
+    </tr>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr id="id_@category.Id" ">
+                <td>@category.Name</td>
+                <td>@category.Slug</td>
+               
+                <td>
+                    <a asp-action="Edit" asp-route-id=@category.Id>Edit</a> |
+                    <a asp-action="Details" asp-route-id=@category.Id>Details</a>
+                    @if (category.Slug != "home")
+                    {
+                        <a class="confirmDeletion" asp-action="Delete" asp-route-id=@category.Id>Delete</a>
+                    }
+                </td>
+          
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Create">Add_Category</a>
+@section Scripts
+{
+    <script>
+        $("table#categories tbody").sortable({
+        items: "tr:not(.home)",
+        placeholder: "ui-state-highlight",
+        update: function (){
+              let ids =  $("table#categories tbody").sortable("serialize")
+              let url="/Admin/Categories/Reorder";
+
+              $post(url, ids, function (){});
+        }
+        })
+    </script>
+}
+
+

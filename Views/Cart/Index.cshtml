@@ -1,0 +1,83 @@
+﻿@model CartViewModel
+<h1 class="display-4">Cart</h1>
+@if(Model.CartItems.Count>0)
+{
+	<div class="cartWrapper">
+        <div class="cartbg d-none">
+			<h3 class="text-center">Redirecting to PayPal...</h3>
+            <img src="~/images/giphy-17mnccku1mjlrbxodo.gif" />
+		</div>
+	<table class="table table-hover">
+	<th>
+		Product name
+	</th>
+	<th>
+		Quantity
+	</th>
+	<th>
+
+	</th>
+	<th>
+		Price
+	</th>
+	<th>
+		Total
+	</th>
+	@foreach (var product in Model.CartItems)
+		{
+			<tr>
+				<td>@product.ProductName</td>
+				<td>@product.Quantity</td>
+				<td>
+					<a asp-action="Add" asp-route-id="@product.ProductId" class="btn btn-success">+</a>
+					<a asp-action="Decrease" asp-route-id="@product.ProductId"class="btn btn-primary">-</a>
+					<a asp-action="Remove" asp-route-id="@product.ProductId"class="btn btn-danger">Remove</a>
+				</td>
+				<td>@product.Price</td>
+				<td>@product.Total</td>
+			</tr>
+			
+		}
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="font-weight:bolder">Grand Total</span><br /><p>@Model.GrandTotal</p></td>
+
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>
+				<a asp-action="Clear" class="btn btn-danger">Clear cart</a>
+					<a asp-controller="Checkout" asp-action="Index" class="btn btn-sm btn-outline-success">Checkout</a>
+			</td>
+		</tr>
+	</table>
+	</div>
+}
+else
+{
+	
+	<h1 class="display-4 text-center">Your cart is empty</h1>
+	
+}
+<partial name="~/Views/Cart/_PayPalPartial.cshtml" for="CartItems" />
+@section Scripts {
+	<script>
+		$(function() {
+
+			$("a.checkout").click(function(e) {
+				e.preventDefault();
+				$("div.cartbg").removeClass("d-none");
+
+				// clearing the cart
+				$.get("/Cart/Clear", {}, function(){
+					$("form.paypalform").submit();
+				});
+		});
+	</script>
+}

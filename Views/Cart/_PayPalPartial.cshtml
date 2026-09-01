@@ -1,0 +1,20 @@
+﻿@{
+    int count = 1;
+}
+<form class="paypalform" action="https://www.sandbox.paypal.com/us/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_cart"/>
+    <input type="hidden" name="upload" value="1"/>
+    <input type="hidden" name="business" value="sb-47dhre43946168@business.example.com"/>
+    @foreach (var item in Model)
+        {
+        <input type="hidden" name="item_name@count" value="@item.ProductName" />
+        <input type="hidden" name="amount@count" value="@item.Price.ToString("F2")" />
+        <input type="hidden" name="quantity@count" value="@item.Quantity" />
+            count++;
+        }
+        <input type="hidden" name="currency_code" value="USD"/>
+    <input type="hidden" name="return" value="https://localhost:7178/Cart" />
+    <input type="hidden" name="cancel_return" value="https://localhost:7178/products" />
+    <input type="image" src="https://www.paypal.com/en/US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" />
+    
+</form>

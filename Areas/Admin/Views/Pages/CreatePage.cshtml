@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Next_Store.Models.Page
+<h1>Create a page</h1>
+<div class="col-md-10">
+<form method="post" asp-controller="Pages" asp-action="Create">
+    <div class="form-control">
+    <label asp-for="Title">Title</label>
+    <input type="text" asp-for="Title" class="form-control"/>
+    <span asp-validation-for="Title" class="text-bg-danger"></span>
+        </div>
+        <div class="form-control">
+    <label asp-for="Content">Content</label>
+    <textarea cols="50" asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-bg-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn-primary"/>
+        </div>
+</form>
+<a asp-action="Index">Back to List</a>
+</div>
+@section Scripts
+{
+    <script>
+        CKEDITOR.replace("Content");
+    </script>
+}
